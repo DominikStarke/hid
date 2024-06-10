@@ -670,7 +670,7 @@ class Api {
       _version_strPtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
 }
 
-class hid_api_version extends ffi.Struct {
+base class hid_api_version extends ffi.Struct {
   @ffi.Int32()
   external int major;
 
@@ -681,10 +681,10 @@ class hid_api_version extends ffi.Struct {
   external int patch;
 }
 
-class hid_device_ extends ffi.Opaque {}
+base class hid_device_ extends ffi.Opaque {}
 
 /// hidapi info structure
-class hid_device_info extends ffi.Struct {
+base class hid_device_info extends ffi.Struct {
   /// Platform-specific device path
   external ffi.Pointer<ffi.Int8> path;
 

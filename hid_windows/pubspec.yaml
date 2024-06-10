@@ -4,11 +4,11 @@ version: 0.1.0
 repository: https://github.com/rustui/hid/tree/main/hid_windows
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ">=3.0.6 <4.0.0"
   flutter: ">=2.5.0"
 
 dependencies:
-  ffi: ^1.1.2
+  ffi: ^2.1.2
   flutter:
     sdk: flutter
   hid_platform_interface: ^0.0.8

@@ -7,10 +7,8 @@ import android.hardware.usb.UsbConstants
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
-import android.util.Log
 import androidx.annotation.NonNull
 import com.google.gson.Gson
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -59,7 +57,7 @@ class HidAndroidPlugin : FlutterPlugin, MethodCallHandler {
                                 context,
                                 0,
                                 Intent("ACTION_USB_PERMISSION"),
-                                0
+                                PendingIntent.FLAG_IMMUTABLE
                             )
                         usbManager.requestPermission(device, permissionIntent)
                     }
@@ -69,7 +67,7 @@ class HidAndroidPlugin : FlutterPlugin, MethodCallHandler {
             "open" -> {
                 device = usbManager.deviceList[call.argument("deviceName")]!!
                 connection = usbManager.openDevice(device)
-                (interfaceIndex, endpointIndex) = getReadIndices(device!!)!!
+                val (interfaceIndex, endpointIndex) = getReadIndices(device!!)!!
                 result.success(
                     connection!!.claimInterface(
                         device!!.getInterface(interfaceIndex!!),
@@ -85,7 +83,7 @@ class HidAndroidPlugin : FlutterPlugin, MethodCallHandler {
                         kotlin.run {
                             val array = ByteArray(length)
                             connection!!.bulkTransfer(
-                                device!!.getInterface(i).getEndpoint(j),
+                                device!!.getInterface(interfaceIndex!!).getEndpoint(endpointIndex!!),
                                 array,
                                 length,
                                 duration
